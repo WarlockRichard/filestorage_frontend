@@ -1,0 +1,29 @@
+<section class="materials">
+    <div class="page-header">
+        <div class="btn" ng-click="popup('new', 'material')">Добавить материал</div>
+        <div class="btn" ng-click="popup('new', 'category')">Добавить тип материалов</div>
+        <div class="page-search">
+            <input type="text" ng-model="search">
+        </div>
+    </div>
+    <div class="materials-table-container">
+        <div class="materials-table">
+            <div class="materials-table-row flex">
+                <div class="column">Genm</div>
+                <div class="column">Путь</div>
+            </div>
+            <div class="materials-table-category" ng-repeat="file in files">
+                <!--<div class="materials-table-category-head">-->
+                    <!--<span ng-click="popup(category, 'category')">{{file.path}}</span>-->
+                    <!--<div>Свернуть</div>-->
+                <!--</div>-->
+                <div class="materials-table-items" ng-repeat="material in category.materials">
+                    <div class="materials-table-row flex" ng-click="popup(material, 'material')">
+                        <div class="column">{{file.path}}</div>
+                        <div class="column">{{file.path}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

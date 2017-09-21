@@ -1,23 +1,23 @@
 app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
-        when('/files', {
-            templateUrl: '/src/js/templates/files/list.html',
-            controller: 'FilesController'
+        when('/', {
+            templateUrl: '/app/templates/files/list.html',
+            controller: 'filesController'
         }).
         when('/login', {
-            templateUrl: '/src/js/templates/login.html',
-            controller: 'LoginController'
+            templateUrl: '/app/templates/login.html',
+            controller: 'loginController'
         }).
         when('/logout', {
-            controller: 'LogoutController'
+            controller: 'logoutController'
         }).
         when('/upload', {
-            templateUrl: '/src/js/templates/files/upload.html',
-            controller: 'UploadController'
+            templateUrl: '/app/templates/files/upload.html',
+            controller: 'uploadController'
         }).
         otherwise({
-            redirectTo: '/projects'
+            redirectTo: '/'
         });
     }
 ]);

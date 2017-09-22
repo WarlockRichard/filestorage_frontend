@@ -1,8 +1,11 @@
-app.controller('filesController',['$scope', '$http', 'File', function($scope, $http, File) {
-    File.all().then(
-        function success(response) {
-            $scope.files = response.data;
-            $scope.loading = false;
+app.controller('filesController',['$scope', '$http', 'File', 'Auth', function($scope, $http, File, Auth) {
+    // console.log(Auth.checkUser());
+    $scope.isLoggedIn = Auth.checkUser();
+    // $scope.isLoggedIn = Auth.isLoggedIn()
+    File.all()
+        .then(function (response) {
+            Auth.checkStatus(response);
+            $scope.files =  response.data;
         });
 
 
@@ -14,6 +17,7 @@ app.controller('filesController',['$scope', '$http', 'File', function($scope, $h
             .then(function(data) {
                 File.all()
                     .then(function(response) {
+                        Auth.checkStatus(response);
                         $scope.files = response.data;
                         $scope.loading = false;
                     });

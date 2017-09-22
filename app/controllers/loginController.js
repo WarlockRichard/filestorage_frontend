@@ -1,5 +1,6 @@
 app.controller('loginController', ['$scope', '$http', 'Auth', function($scope, $http,  Auth) {
-    Auth.checkGuest();
+    $scope.isLoggedIn = !Auth.checkGuest()
+    // Auth.checkGuest();
     $scope.attemptToLogin = function() {
         $scope.loading = true;
 

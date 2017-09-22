@@ -1,34 +1,54 @@
 app.factory('File',['$http', 'Auth', function($http, Auth) {
-    console.log(Auth.checkUser());
     return {
 
         all :function () {
-            var response = $http.get('http://backend.dev/api/files');
-            Auth.checkStatus(response);
-            return response;
+            console.log(Auth.checkUser());
+            return $http({
+                method: 'GET',
+                url: 'http://backend.dev/api/files',
+                headers: {
+                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                }
+            });
         },
 
         show : function($id) {
-            var response =  $http.get('http://backend.dev/api/files/' + $id);
-            Auth.checkStatus(response);
-            return response;
+            console.log(Auth.checkUser());
+            return  $http({
+                method: 'GET',
+                url: 'http://backend.dev/api/files/' + $id,
+                headers: {
+                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                }
+            });
         },
 
         store : function(data) {
-            var response = $http({
+            console.log(Auth.checkUser());
+            return $http({
                 method: 'POST',
                 url: 'http://backend.dev/api/files',
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+                headers: {
+                    'Content-Type' : 'application/x-www-form-urlencoded',
+                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                },
                 data: $.param(data)
             });
-            Auth.checkStatus(response);
-            return response;
         },
 
         destroy : function(id) {
-            var response = $http.delete('http://backend.dev/api/files/' + id);
-            Auth.checkStatus(response);
-            return response;
+            console.log(Auth.checkUser());
+            $http({
+                method: 'DELETE',
+                url: 'http://backend.dev/api/files/' + id,
+                headers: {
+                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                }
+            });
+            // .then(function (response) {
+            //     Auth.checkStatus(response);
+            //     return response;
+            // });
         }
     }
 

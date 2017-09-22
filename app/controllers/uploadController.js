@@ -1,16 +1,44 @@
-app.controller('uploadController',['$scope', '$http', '$location', 'File',  function($scope, $http, $location, File) {
+app.controller('uploadController',['$scope', '$http', '$location', 'File', 'Auth',  function($scope, $http, $location, File, Auth) {
 
+    // $scope.isLoggedIn = Auth.isLoggedIn();
+
+    console.log($scope.isLoggedIn = Auth.checkUser());
     //Set options for dropzone
     //Visit http://www.dropzonejs.com/#configuration-options for more options
+
     $scope.dzOptions = {
-        url : '/upload',
-        acceptedFiles : $scope.type,//'image/jpeg, images/jpg, image/png',
+        url : 'http://backend.dev/api/files',
+        acceptedFiles : 'image/jpeg, images/jpg, image/png',//'image/jpeg, images/jpg, image/png',
         addRemoveLinks : true,
         dictDefaultMessage : 'Click to add or drop file',
         dictRemoveFile : 'Remove file',
         dictResponseError : 'Could not upload this file',
-        parallelUploads : 5,
-        autoProcessQueue : false
+        parallelUploads : 1,
+        autoProcessQueue : true,
+        headers : {'Authentication' : 'Bearer : ' + Auth.getToken()}
+    };
+    $scope.change = function() {
+        var acceptedFiles;
+        if($scope.type == 'image'){
+            acceptedFiles= 'image/jpeg, images/jpg, image/png';
+        }
+        else if($scope.type == 'text'){
+            acceptedFiles = 'application/pdf';
+        }
+        else if($scope.type == 'other'){
+            acceptedFiles = '';
+        }
+        $scope.dzOptions = {
+            url : 'http://backend.dev/api/files',
+            acceptedFiles : acceptedFiles,//'image/jpeg, images/jpg, image/png',
+            addRemoveLinks : true,
+            dictDefaultMessage : 'Click to add or drop file',
+            dictRemoveFile : 'Remove file',
+            dictResponseError : 'Could not upload this file',
+            parallelUploads : 5,
+            autoProcessQueue : true,
+            headers : {'Authentication' : 'Bearer : ' + Auth.getToken()}
+        };
     };
 
     $scope.dzCallbacks = {

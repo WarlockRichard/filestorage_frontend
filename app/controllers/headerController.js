@@ -1,5 +1,5 @@
 app.controller('headerController', ['$scope', 'Auth',
     function($scope, Auth) {
-        $scope.isLoggedIn = Auth.isLoggedIn();
+        // $scope.isLoggedIn = Auth.isLoggedIn()
     }
-])
+]);

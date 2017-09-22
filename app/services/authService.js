@@ -1,4 +1,4 @@
-app.factory('Auth', ['$http', '$location', 'locker', function($http, $location, locker) {
+app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location, locker) {
     return {
         login :function ($credentials) {
             if(!locker.has('token')){
@@ -39,7 +39,7 @@ app.factory('Auth', ['$http', '$location', 'locker', function($http, $location, 
         },
 
         getUser : function() {
-            if(!locker.has('jwt')){
+            if(locker.has('jwt')){
                 $location.path('/login');
             }
             return $http({
@@ -50,16 +50,20 @@ app.factory('Auth', ['$http', '$location', 'locker', function($http, $location, 
                 }
             });
         },
+        getToken : function () {
+            return locker.get('jwt');
+        },
+        isLoggedIn : function () {
+            return locker.has('jwt');
+        },
         checkUser : function () {
             return locker.has('jwt')?true:$location.path('/login');
         },
         checkGuest : function () {
             return locker.has('jwt')?$location.path('/'):true;
         },
-        isLoggedIn : function () {
-            return locker.has('jwt');
-        },
         checkStatus: function (response){
+            console.log(response.status);
             if(response.status === '401'){
                 locker.forget('jwt');
                 $location.path('/login')

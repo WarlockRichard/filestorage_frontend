@@ -1,25 +1,34 @@
-app.factory('File',['$http', function($http) {
+app.factory('File',['$http', 'Auth', function($http, Auth) {
+    console.log(Auth.checkUser());
     return {
 
         all :function () {
-            return $http.get('http://backend.dev/api/files/');
+            var response = $http.get('http://backend.dev/api/files');
+            Auth.checkStatus(response);
+            return response;
         },
 
         show : function($id) {
-            return $http.get('http://backend.dev/api/files/' + $id);
+            var response =  $http.get('http://backend.dev/api/files/' + $id);
+            Auth.checkStatus(response);
+            return response;
         },
 
         store : function(data) {
-            return $http({
+            var response = $http({
                 method: 'POST',
                 url: 'http://backend.dev/api/files',
                 headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
                 data: $.param(data)
             });
+            Auth.checkStatus(response);
+            return response;
         },
 
         destroy : function(id) {
-            return $http.delete('http://backend.dev/api/files/' + id);
+            var response = $http.delete('http://backend.dev/api/files/' + id);
+            Auth.checkStatus(response);
+            return response;
         }
     }
 

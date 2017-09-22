@@ -1,14 +1,27 @@
-app.factory('Auth', ['$http', 'locker', function($http, locker) {
+app.factory('Auth', ['$http', '$location', 'locker', function($http, $location, locker) {
     return {
         login :function ($credentials) {
-            $http({
-                method: 'POST',
-                url: 'http://backend.dev/api/auth/login',
-                headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
-                data: $.param($credentials)
-            }).then(function (data) {
-                locker.put('jwt', data.token);
-            });
+            if(!locker.has('token')){
+                $http({
+                    method: 'POST',
+                    url: 'http://backend.dev/api/auth/login',
+                    headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+                    data: $.param($credentials)
+                }).then(function (response) {
+                    if(response.data.status === 'success'){
+                        locker.put('jwt', response.data.token);
+                        $location.path('/');
+                    }
+                    else {
+                        console.log('Auth failed');
+                        console.log(response);
+                    }
+                });
+            }
+            else {
+                $location.path('/');
+            }
+
         },
 
         logout : function() {
@@ -18,10 +31,16 @@ app.factory('Auth', ['$http', 'locker', function($http, locker) {
                 headers: {
                     'Authentication' : 'Bearer : ' + locker.get('jwt')
                 }
+            }).then(function (response) {
+                console.log(response);
+                $location.path('/');
             });
         },
 
         getUser : function() {
+            if(!locker.has('jwt')){
+                $location.path('/login');
+            }
             return $http({
                 method: 'POST',
                 url: 'http://backend.dev/api/auth/user',
@@ -29,6 +48,21 @@ app.factory('Auth', ['$http', 'locker', function($http, locker) {
                     'Authentication' : 'Bearer : ' + locker.get('jwt')
                 }
             });
+        },
+        checkUser : function () {
+            return locker.has('jwt')?true:$location.path('/login');
+        },
+        checkGuest : function () {
+            return locker.has('jwt')?$location.path('/'):true;
+        },
+        isLoggedIn : function () {
+            return locker.has('jwt');
+        },
+        checkStatus: function (response){
+            if(response.status === '401'){
+                locker.forget('jwt');
+                $location.path('/login')
+            }
         }
     }
 

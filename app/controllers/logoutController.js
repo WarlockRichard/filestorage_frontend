@@ -1,14 +1,4 @@
-app.controller('filesController', ['$scope', '$location', 'Auth', function($scope, $location,  Auth) {
-    $scope.loading = true;
+app.controller('logoutController', ['$scope', '$location', 'Auth', function($scope, $location,  Auth) {
 
-    Auth.logout()
-        .then(function(data) {
-            $scope.loading = false;
-
-            if(data.status !== 'success') {
-                console.log('Still logged in');
-            }
-            console.log('Logged off');
-            $location.path('/');
-        });
+    Auth.logout();
 }]);

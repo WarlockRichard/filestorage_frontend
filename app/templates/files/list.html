@@ -1,29 +1,36 @@
-<section class="materials">
-    <div class="page-header">
-        <div class="btn" ng-click="popup('new', 'material')">Добавить материал</div>
-        <div class="btn" ng-click="popup('new', 'category')">Добавить тип материалов</div>
-        <div class="page-search">
-            <input type="text" ng-model="search">
-        </div>
+
+<div class="container" style="margin-top: 100px">
+    <div class="form-group col-md-4">
+        <input type="search" class="form-control" id="search">
     </div>
-    <div class="materials-table-container">
-        <div class="materials-table">
-            <div class="materials-table-row flex">
-                <div class="column">Genm</div>
-                <div class="column">Путь</div>
-            </div>
-            <div class="materials-table-category" ng-repeat="file in files">
-                <!--<div class="materials-table-category-head">-->
-                    <!--<span ng-click="popup(category, 'category')">{{file.path}}</span>-->
-                    <!--<div>Свернуть</div>-->
-                <!--</div>-->
-                <div class="materials-table-items" ng-repeat="material in category.materials">
-                    <div class="materials-table-row flex" ng-click="popup(material, 'material')">
-                        <div class="column">{{file.path}}</div>
-                        <div class="column">{{file.path}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    <h2>Basic Table</h2>
+    <p>The .table class adds basic styling (light padding and only horizontal dividers) to a table:</p>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Upload at</th>
+            <th>Path</th>
+            <th>Original name</th>
+            <th>Size</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="file in files.data">
+            <th>{{file.id}}</th>
+            <th>{{file.created_at}}</th>
+            <th>{{file.path}}</th>
+            <th>{{file.name}}</th>
+            <th>{{file.size}}</th>
+            <th>
+                <a type="button" href="{{file.path}}" download="{{file.path}}" class="btn btn-success" ng-click="">Download</a>
+            </th>
+            <th>
+                <button type="button" class="btn btn-danger" ng-click="destroy(file.id)">Delete</button>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>

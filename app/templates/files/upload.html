@@ -1,1 +1,12 @@
-ZOG
+<div class="container" style="margin-top: 200px">
+    <select ng-model="type">
+        <option value="">---Select type---</option> <!-- not selected / blank option -->
+        <option value="image">Image</option>
+        <option value="text">Text</option>
+        <option value="other">Other</option>
+    </select>
+    <div class="center-block col-md-4" ng-show="type">
+        <!--<h2 class="form-signin-heading">Please log in</h2>-->
+        <div id="dropzone" class="dropzone" options="dzOptions" callbacks="dzCallbacks" ng-dropzone></div>
+    </div>
+</div>

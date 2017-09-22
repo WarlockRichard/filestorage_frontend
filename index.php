@@ -4,41 +4,64 @@
     <meta charset="utf-8">
     <title>Filestorage</title>
 
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700,300&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="src/css/styles.css" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" charset="utf-8">
+    <link rel="stylesheet" href="/src/css/dropzone.css" charset="utf-8">
+    <link rel="stylesheet" href="/src/css/ng-dropzone.min.css" charset="utf-8">
 </head>
 <body ng-app="App">
-<section class="menu">
-    <div class="menu-list">
-        <a ng-class="{'active':selectedTab === 'files'}" ng-click="selectedTab = 'files'" href="#/!">Мои файлы</a>
-        <a ng-class="{'active':selectedTab === 'upload'}" ng-click="selectedTab = 'upload'" href="#!upload">Загрузить</a>
-        <a ng-show="{is_logged_in}" href="#!logout">Выйти</a>
-        <a ng-hide="{is_logged_in}" href="#!login">Войти</a>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <a class="navbar-brand" href="#/!" ng-click="selectedTab='files'">Filestorage</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" ng-class="{'active': selectedTab === 'files'}">
+                <a class="nav-link" href="#/!" ng-click="selectedTab='files'">
+                    My Files
+                    <span ng-show="{selectedTab === 'files'}" class="sr-only">(current)</span>
+                </a>
+            </li>
+            <li class="nav-item" ng-class="{'active':selectedTab === 'upload'}">
+                <a class="nav-link" href="#!upload" ng-click="selectedTab='upload'">
+                    Upload
+                    <span ng-show="{selectedTab === 'upload'}" class="sr-only">(current)</span>
+                </a>
+            </li>
+        </ul>
+        <div class="my-2 my-lg-0" ng-controller="headerController">
+            <span class="nav-item" ng-hide="{isLoggedIn}" ng-click="selectedTab='/login'">
+                <a class="nav-link" href="#!login">Login </a>
+            </span>
+            <span class="nav-item" ng-show="{isLoggedIn}">
+                <a class="nav-link" href="#!logout">Logout</a>
+            </span>
+        </div>
     </div>
-</section>
-<div ng-view>
+</nav>
+<div ng-view style="margin-top: 72px">
 
 </div>
-<!--<section class="popuperror-container" ng-controller="indexPopupError">-->
-<!--    <div class="popuperror-overlay" ng-click="hide()"></div>-->
-<!--    <div class="popuperror-body">-->
-<!--        <div class="popuperror-message"></div>-->
-<!--        <div class="btn" ng-click="hide()">-->
-<!--            Закрыть-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</section>-->
 <script src="/node_modules/angular/angular.js"></script>
 <script src="/node_modules/angular-route/angular-route.min.js"></script>
 <script src="/node_modules/jquery/dist/jquery.min.js"></script>
 <script src="/node_modules/angular-locker/dist/angular-locker.min.js"></script>
 
+<script src="src/js/dropzone.js" charset="utf-8"></script>
+<script src="src/js/ng-dropzone.min.js" charset="utf-8"></script>
 <script src="app/modules/app.js" charset="utf-8"></script>
+<script src="app/services/authService.js" charset="utf-8"></script>
 <script src="app/services/fileService.js" charset="utf-8"></script>
+<script src="app/controllers/headerController.js" charset="utf-8"></script>
+<script src="app/controllers/loginController.js" charset="utf-8"></script>
+<script src="app/controllers/logoutController.js" charset="utf-8"></script>
 <script src="app/controllers/filesController.js" charset="utf-8"></script>
 <script src="app/controllers/uploadController.js" charset="utf-8"></script>
 <script src="app/config/routes.js" charset="utf-8"></script>
+
+
+<!--<script src="src/js/ng-dropzone.js" charset="utf-8"></script>-->
 
 </body>
 </html>

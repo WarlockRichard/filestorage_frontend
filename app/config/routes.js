@@ -10,6 +10,7 @@ app.config(['$routeProvider',
             controller: 'loginController'
         }).
         when('/logout', {
+            templateUrl: '/app/templates/logout.html',
             controller: 'logoutController'
         }).
         when('/upload', {

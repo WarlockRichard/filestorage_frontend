@@ -17,21 +17,19 @@
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" ng-class="{'active': selectedTab === 'files'}">
-                <a class="nav-link" href="#/!" ng-click="selectedTab='files'">
+            <li class="nav-item" ng-show="{isLoggedIn}">
+                <a class="nav-link" href="#/!">
                     My Files
-                    <span ng-show="{selectedTab === 'files'}" class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item" ng-class="{'active':selectedTab === 'upload'}">
-                <a class="nav-link" href="#!upload" ng-click="selectedTab='upload'">
+            <li class="nav-item" ng-show="{isLoggedIn}">
+                <a class="nav-link" href="#!upload">
                     Upload
-                    <span ng-show="{selectedTab === 'upload'}" class="sr-only">(current)</span>
                 </a>
             </li>
         </ul>
         <div class="my-2 my-lg-0" ng-controller="headerController">
-            <span class="nav-item" ng-hide="{isLoggedIn}" ng-click="selectedTab='/login'">
+            <span class="nav-item" ng-hide="{isLoggedIn}">
                 <a class="nav-link" href="#!login">Login </a>
             </span>
             <span class="nav-item" ng-show="{isLoggedIn}">

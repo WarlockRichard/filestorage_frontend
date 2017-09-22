@@ -32,6 +32,7 @@ app.factory('Auth', ['$http', '$location', 'locker', function($http, $location, 
                     'Authentication' : 'Bearer : ' + locker.get('jwt')
                 }
             }).then(function (response) {
+                locker.forget('jwt');
                 console.log(response);
                 $location.path('/');
             });

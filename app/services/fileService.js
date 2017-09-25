@@ -7,7 +7,7 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
                 method: 'GET',
                 url: 'http://backend.dev/api/files',
                 headers: {
-                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                    'Authorization' : 'Bearer:' + Auth.getToken()
                 }
             });
         },
@@ -18,7 +18,7 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
                 method: 'GET',
                 url: 'http://backend.dev/api/files/' + $id,
                 headers: {
-                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                    'Authorization' : 'Bearer:' + Auth.getToken()
                 }
             });
         },
@@ -30,7 +30,7 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
                 url: 'http://backend.dev/api/files',
                 headers: {
                     'Content-Type' : 'application/x-www-form-urlencoded',
-                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                    'Authorization' : 'Bearer:' + Auth.getToken()
                 },
                 data: $.param(data)
             });
@@ -42,7 +42,7 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
                 method: 'DELETE',
                 url: 'http://backend.dev/api/files/' + id,
                 headers: {
-                    'Authentication' : 'Bearer : ' + Auth.getToken()
+                    'Authorization' : 'Bearer:' + Auth.getToken()
                 }
             });
             // .then(function (response) {

@@ -2,7 +2,7 @@ app.controller('uploadController',['$scope', '$http', '$location', 'File', 'Auth
 
     // $scope.isLoggedIn = Auth.isLoggedIn();
 
-    console.log($scope.isLoggedIn = Auth.checkUser());
+    console.log($scope.$parent.isLoggedIn = Auth.checkUser());
     //Set options for dropzone
     //Visit http://www.dropzonejs.com/#configuration-options for more options
 

@@ -29,7 +29,7 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
                 method: 'GET',
                 url: 'http://backend.dev/api/auth/logout',
                 headers: {
-                    'Authentication' : 'Bearer : ' + locker.get('jwt')
+                    'Authorization' : 'Bearer:' + locker.get('jwt')
                 }
             }).then(function (response) {
                 locker.forget('jwt');
@@ -46,7 +46,7 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
                 method: 'POST',
                 url: 'http://backend.dev/api/auth/user',
                 headers: {
-                    'Authentication' : 'Bearer : ' + locker.get('jwt')
+                    'Authorization' : 'Bearer:' + locker.get('jwt')
                 }
             });
         },

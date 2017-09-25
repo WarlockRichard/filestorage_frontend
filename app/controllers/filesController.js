@@ -1,6 +1,6 @@
 app.controller('filesController',['$scope', '$http', 'File', 'Auth', function($scope, $http, File, Auth) {
     // console.log(Auth.checkUser());
-    $scope.isLoggedIn = Auth.checkUser();
+    $scope.$parent.isLoggedIn = Auth.checkUser();
     // $scope.isLoggedIn = Auth.isLoggedIn()
     File.all()
         .then(function (response) {

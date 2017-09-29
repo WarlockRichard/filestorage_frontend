@@ -11,6 +11,7 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
                     if(response.data.status === 'success'){
                         locker.put('jwt', response.data.token);
                         $location.path('/');
+                        console.log(response);
                     }
                     else {
                         console.log('Auth failed');
@@ -29,12 +30,17 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
                 method: 'GET',
                 url: 'http://backend.dev/api/auth/logout',
                 headers: {
-                    'Authorization' : 'Bearer:' + locker.get('jwt')
+                    'Authorization' : 'Bearer ' + locker.get('jwt')
                 }
             }).then(function (response) {
                 locker.forget('jwt');
+                $location.path('/login');
+                $location.replace();
+            }, function (response) {
+                locker.forget('jwt');
                 console.log(response);
-                $location.path('/');
+                $location.path('/login');
+                $location.replace();
             });
         },
 
@@ -46,7 +52,7 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
                 method: 'POST',
                 url: 'http://backend.dev/api/auth/user',
                 headers: {
-                    'Authorization' : 'Bearer:' + locker.get('jwt')
+                    'Authorization' : 'Bearer ' + locker.get('jwt')
                 }
             });
         },
@@ -57,14 +63,21 @@ app.factory('Auth', [ '$http', '$location', 'locker', function($http, $location,
             return locker.has('jwt');
         },
         checkUser : function () {
-            return locker.has('jwt')?true:$location.path('/login');
+            if(locker.has('jwt')){
+                return true;
+            }
+            else {
+                $location.path('/login');
+                $location.replace();
+                return false;
+            }
         },
         checkGuest : function () {
             return locker.has('jwt')?$location.path('/'):true;
         },
         checkStatus: function (response){
             console.log(response.status);
-            if(response.status === '401'){
+            if(response.status === 401){
                 locker.forget('jwt');
                 $location.path('/login')
             }

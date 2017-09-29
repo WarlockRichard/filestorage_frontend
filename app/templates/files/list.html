@@ -1,7 +1,7 @@
 
 <div class="container" style="margin-top: 100px">
     <div class="form-group col-md-4">
-        <input type="search" class="form-control" id="search">
+        <input ng-model="searchText" type="search" class="form-control" id="search">
     </div>
     <h2>Files Table</h2>
     <table class="table">
@@ -12,22 +12,22 @@
             <th>Path</th>
             <th>Original name</th>
             <th>Size</th>
-            <th></th>
+            <th></th>s
             <th></th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="file in files.data">
+        <tr ng-repeat="file in files.data | filter:searchText">
             <th>{{file.id}}</th>
             <th>{{file.created_at}}</th>
             <th>{{file.path}}</th>
-            <th>{{file.name}}</th>
-            <th>{{file.size}}</th>
+            <th>{{file.original_name}}</th>
+            <th>{{file.size | bytes}}</th>
             <th>
                 <a type="button" href="{{file.path}}" download="{{file.path}}" class="btn btn-success" ng-click="">Download</a>
             </th>
             <th>
-                <button type="button" class="btn btn-danger" ng-click="destroy(file.id)">Delete</button>
+                <button type="button" class="btn btn-danger" ng-click="deleteFile(file.id)" style="cursor: pointer">Delete</button>
             </th>
         </tr>
         </tbody>

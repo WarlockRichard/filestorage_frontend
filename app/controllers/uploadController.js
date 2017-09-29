@@ -1,58 +1,57 @@
 app.controller('uploadController',['$scope', '$http', '$location', 'File', 'Auth',  function($scope, $http, $location, File, Auth) {
 
-    // $scope.isLoggedIn = Auth.isLoggedIn();
-
-    console.log($scope.$parent.isLoggedIn = Auth.checkUser());
+    // $scope.$on('$routeChangeStart', function(scope, next, current) {
+    if(!($scope.$parent.isLoggedIn = Auth.checkUser())){
+        return;
+    }
+    // });
     //Set options for dropzone
-    //Visit http://www.dropzonejs.com/#configuration-options for more options
-
+    //Visit http://www.dropzonejs.com/#configuration-options for more optionsar acceptedTypes = ['jpg', 'svg', 'png'];
     $scope.dzOptions = {
         url : 'http://backend.dev/api/files',
-        acceptedFiles : 'image/jpeg, images/jpg, image/png',//'image/jpeg, images/jpg, image/png',
+        paramName: 'file',
+        acceptedFiles : 'image/jpeg, images/jpg, image/png, application/pdf, text/plain',//'image/jpeg, images/jpg, image/png',
         addRemoveLinks : true,
         dictDefaultMessage : 'Click to add or drop file',
         dictRemoveFile : 'Remove file',
         dictResponseError : 'Could not upload this file',
         parallelUploads : 1,
         autoProcessQueue : true,
-        headers : {'Authentication' : 'Bearer : ' + Auth.getToken()}
+        accept: function(file, done) {
+            if($scope.type === 'image'){
+                acceptedFiles = ['jpg', 'svg', 'png'];
+            }
+            else if($scope.type === 'text'){
+                acceptedFiles = ['pdf', 'txt'];
+            }
+            else if($scope.type === 'other'){
+                done();
+            }
+            if ($.inArray(file.name.slice(-3), acceptedFiles ) >= 0) {
+                //accepted file
+                done();
+            }
+            else {
+                //Unaccepted file revert
+                this.removeFile(file);
+            }
+        },
+        headers : {'Authorization' : 'Bearer ' + Auth.getToken()}
     };
     $scope.change = function() {
-        var acceptedFiles;
-        if($scope.type == 'image'){
-            acceptedFiles= 'image/jpeg, images/jpg, image/png';
-        }
-        else if($scope.type == 'text'){
-            acceptedFiles = 'application/pdf';
-        }
-        else if($scope.type == 'other'){
-            acceptedFiles = '';
-        }
-        $scope.dzOptions = {
-            url : 'http://backend.dev/api/files',
-            acceptedFiles : acceptedFiles,//'image/jpeg, images/jpg, image/png',
-            addRemoveLinks : true,
-            dictDefaultMessage : 'Click to add or drop file',
-            dictRemoveFile : 'Remove file',
-            dictResponseError : 'Could not upload this file',
-            parallelUploads : 5,
-            autoProcessQueue : true,
-            headers : {'Authentication' : 'Bearer : ' + Auth.getToken()}
-        };
     };
 
     $scope.dzCallbacks = {
         'addedfile' : function(file){
-            console.info('File added.', file);
+            console.log(file);
+            // File.store(file);
         }
     };
 
     $scope.data = {};
 
-    $scope.loading = true;
 
     $scope.commitUpload = function() {
-        $scope.loading = true;
 
         File.store($scope.data)
             .then(function success(response) {

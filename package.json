@@ -1,0 +1,27 @@
+{
+  "name": "frontend.dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.6.6",
+    "angular-locker": "^2.0.5",
+    "angular-route": "^1.6.6",
+    "bootstrap": "^4.0.0-beta",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WarlockRichard/filestorage_frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WarlockRichard/filestorage_frontend/issues"
+  },
+  "homepage": "https://github.com/WarlockRichard/filestorage_frontend#readme"
+}

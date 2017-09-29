@@ -14,8 +14,8 @@ app.controller('filesController',['$scope', '$http', 'File', 'Auth', function($s
         });
 
 
-    $scope.showFile = function(id) {
-        File.show(id)
+    $scope.downloadFile = function(id) {
+        File.download(id)
             .then(function (data) {
                 console.log(data)
             });
@@ -34,5 +34,34 @@ app.controller('filesController',['$scope', '$http', 'File', 'Auth', function($s
                     });
 
             });
+    };
+    $scope.downloadFile = function (id, name) {
+        File.download(id).then(function (response) {
+            console.log(response);
+            console.log(response.headers);
+            var filename = name.slice(0, -4);
+            var headers = response.headers;
+            var contentType = headers('content-type');
+
+            var linkElement = document.createElement('a');
+            try {
+                var blob = new Blob([response.data], { type: contentType });
+                var url = window.URL.createObjectURL(blob);
+
+                linkElement.setAttribute('href', url);
+                linkElement.setAttribute("download", filename);
+
+                var clickEvent = new MouseEvent("click", {
+                    "view": window,
+                    "bubbles": true,
+                    "cancelable": false
+                });
+                linkElement.dispatchEvent(clickEvent);
+            } catch (e) {
+                console.log(e);
+            }
+        }, function (response) {
+            console.log(response);
+        });
     };
 }]);

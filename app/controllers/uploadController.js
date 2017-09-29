@@ -24,9 +24,8 @@ app.controller('uploadController',['$scope', '$http', '$location', 'File', 'Auth
             else if($scope.type === 'text'){
                 acceptedFiles = ['pdf', 'txt'];
             }
-            else if($scope.type === 'other'){
+            else
                 done();
-            }
             if ($.inArray(file.name.slice(-3), acceptedFiles ) >= 0) {
                 //accepted file
                 done();
@@ -38,12 +37,10 @@ app.controller('uploadController',['$scope', '$http', '$location', 'File', 'Auth
         },
         headers : {'Authorization' : 'Bearer ' + Auth.getToken()}
     };
-    $scope.change = function() {
-    };
 
     $scope.dzCallbacks = {
-        'addedfile' : function(file){
-            console.log(file);
+        'success' : function(file){
+                $location.path('/');
             // File.store(file);
         }
     };

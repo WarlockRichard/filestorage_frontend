@@ -25,13 +25,11 @@
             <th>{{file.original_name}}</th>
             <th>{{file.size | bytes}}</th>
             <th>
-                <a type="button" href="{{file.path}}" download="{{file.path}}" class="btn btn-success" ng-click="">Download</a>
+                <!--<a type="button" target="_blank" href="http://backend.dev/api/files/download/{{file.id}}" class="btn btn-success" ng-click="">Download</a>-->
+                <button type="button" class="btn btn-success" ng-click="downloadFile(file.id, file.original_name)" style="cursor: pointer">Download</button>
             </th>
             <th>
                 <button type="button" class="btn btn-danger" ng-click="deleteFile(file.id)" style="cursor: pointer">Delete</button>
-            </th>
-            <th>
-                <button type="button" class="btn btn-danger" ng-click="showFile(file.id)" style="cursor: pointer">Show</button>
             </th>
         </tr>
         </tbody>

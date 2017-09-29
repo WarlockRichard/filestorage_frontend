@@ -10,12 +10,13 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
                 }
             });
         },
-
-        show : function($id) {
-            return  $http({
+        download : function(id) {
+            return $http({
                 method: 'GET',
-                url: 'http://backend.dev/api/files/' + $id,
+                url: 'http://backend.dev/api/files/download/'+id,
+                responseType: 'arraybuffer',
                 headers: {
+                    'Content-Type' : 'application/x-www-form-urlencoded',
                     'Authorization' : 'Bearer ' + Auth.getToken()
                 }
             });

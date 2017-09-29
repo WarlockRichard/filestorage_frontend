@@ -14,6 +14,14 @@ app.controller('filesController',['$scope', '$http', 'File', 'Auth', function($s
         });
 
 
+    $scope.showFile = function(id) {
+        File.show(id)
+            .then(function (data) {
+                console.log(data)
+            });
+    };
+
+
 
     $scope.deleteFile = function(id) {
         File.destroy(id)

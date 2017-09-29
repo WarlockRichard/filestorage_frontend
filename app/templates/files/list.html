@@ -12,7 +12,8 @@
             <th>Path</th>
             <th>Original name</th>
             <th>Size</th>
-            <th></th>s
+            <th></th>
+            <th></th>
             <th></th>
         </tr>
         </thead>
@@ -28,6 +29,9 @@
             </th>
             <th>
                 <button type="button" class="btn btn-danger" ng-click="deleteFile(file.id)" style="cursor: pointer">Delete</button>
+            </th>
+            <th>
+                <button type="button" class="btn btn-danger" ng-click="showFile(file.id)" style="cursor: pointer">Show</button>
             </th>
         </tr>
         </tbody>

@@ -34,7 +34,7 @@ app.factory('File',['$http', 'Auth', function($http, Auth) {
         },
 
         destroy : function(id) {
-            $http({
+            return $http({
                 method: 'DELETE',
                 url: 'http://backend.dev/api/files/' + id,
                 headers: {
